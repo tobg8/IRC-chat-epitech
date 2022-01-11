@@ -37,14 +37,9 @@ const ChatRoom = () => {
     channels &&
       socket.on('channel', channel => {
         let updateChannels = [...channels];
-
         updateChannels.map(e => {
           if (e.id === channel.id) {
             e.participants = channel.participants;
-            if (channel.id === selectedChannel && channel.participants > 0) {
-              console.log(channel.id, selectedChannel);
-              notify('💚 | Enter channel - ' + channel.name);
-            }
           }
           handleChangeChannels(updateChannels);
         });
@@ -55,6 +50,7 @@ const ChatRoom = () => {
     try {
       setSelectedChannel(index);
       socketJoinChannel(index);
+      notify('🟢 | Enter channel - ' + channels[index - 1].name);
     } catch (error) {
       console.log(error);
       notify('🔴 | Something went wrong when accessing a channel');
@@ -77,6 +73,8 @@ const ChatRoom = () => {
                   <ListItem
                     disablePadding
                     sx={{
+                      borderLeft: '1px solid white',
+                      borderRight: '1px solid white',
                       // selected and (selected + hover) states
                       '&& .Mui-selected, && .Mui-selected:hover': {
                         bgcolor: '#b55b11'
