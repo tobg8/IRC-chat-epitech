@@ -77,7 +77,8 @@ const Home = () => {
             sx={{
               width: '100%',
               minHeight: '250px',
-              padding: '.5em',
+              padding: '1em',
+              paddingBottom: '.5em',
               backgroundColor: '#b55b1136'
             }}
           >

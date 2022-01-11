@@ -68,13 +68,13 @@
 
 .home__info {
   min-width: 150px;
-  color: rgba(255, 255, 255, 0.149);
+  color: rgba(255, 255, 255, 0.605);
   line-height: 1.1;
 }
 
 .home__info-definition {
   text-align: start;
-  color: #b55b11;
+  color: #c16f2d;
   font-weight: bold;
 }
 
