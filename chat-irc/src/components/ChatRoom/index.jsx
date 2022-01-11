@@ -42,7 +42,7 @@ const ChatRoom = () => {
           handleChangeChannels(updateChannels);
         });
       });
-  }, [selectedChannel]);
+  }, [selectedChannel, channels]);
 
   const handleListItemClick = (_, index) => {
     try {
@@ -60,8 +60,6 @@ const ChatRoom = () => {
       notify('🔴 | Something went wrong when accessing a channel');
     }
   };
-
-  channels && console.log(channels[selectedChannel - 1], 'coucou');
 
   const handleChangeChannels = React.useCallback(channels => {
     setChannels(channels);

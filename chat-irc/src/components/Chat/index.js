@@ -5,14 +5,24 @@ import { UserContext } from '../../context/userContext';
 import { Divider, TextField, Paper, IconButton } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 
+import Messages from '../Messages';
+
 const Chat = ({ id, name, users, participants }) => {
   const { message, setMessage } = React.useContext(UserContext);
+
   return (
     <div className="chat">
       <h2 className="chat__title">{name}</h2>
       <Divider sx={{ backgroundColor: 'white' }} />
       {/* components messages here */}
-      <div className="chat__messages-container">Messages</div>
+
+      <Messages
+        users={users}
+        channelId={id}
+        channelName={name}
+        participants={participants}
+      ></Messages>
+
       <Paper
         component="form"
         sx={{
