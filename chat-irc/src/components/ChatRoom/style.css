@@ -1,0 +1,27 @@
+.chat {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Poppins', sans-serif;
+  background-color: rgba(15, 15, 15, 0.836);
+}
+
+.chat__container {
+  width: 80%;
+  height: 80vh;
+  background-color: rgba(15, 15, 15, 0.612);
+  border: 5px solid #b55b11;
+  border-radius: 5px;
+  padding: 1em;
+}
+
+.chat__channels-container {
+  height: 100%;
+  width: 15%;
+}
+
+.channels {
+  height: 20px;
+}
