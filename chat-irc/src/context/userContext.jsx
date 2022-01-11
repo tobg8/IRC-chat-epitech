@@ -10,6 +10,7 @@ function UserContextProvider(props) {
   const [channels, setChannels] = React.useState(null);
   const [isLoading, setIsLoading] = React.useState(false);
   const [selectedChannel, setSelectedChannel] = React.useState(null);
+  const [message, setMessage] = React.useState('');
 
   const getChannels = async () => {
     try {
@@ -40,7 +41,9 @@ function UserContextProvider(props) {
         isLoading,
         setIsLoading,
         selectedChannel,
-        setSelectedChannel
+        setSelectedChannel,
+        message,
+        setMessage
       }}
     >
       {props.children}

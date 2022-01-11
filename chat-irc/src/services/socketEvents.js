@@ -12,7 +12,3 @@ export const socketServerDisconnect = () =>
   socket.off('connection', () => {
     notify('connected to socket-server');
   });
-
-export const socketJoinChannel = id => {
-  socket.emit('channel-join', id, ack => {});
-};

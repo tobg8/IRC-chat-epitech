@@ -27,7 +27,7 @@
 }
 
 .home__user-container {
-  padding: 1em;
+  padding: 1em 2em;
   border: 2px dashed #b55b11;
   height: 80%;
   display: flex;

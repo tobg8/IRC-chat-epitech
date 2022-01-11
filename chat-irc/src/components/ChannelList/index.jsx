@@ -15,6 +15,7 @@ const ChannelList = ({ handleListItemClick }) => {
 
   return (
     <List component="nav" aria-label="channel list">
+      {isLoading && <p>Loading</p>}
       {!isLoading && <Divider sx={{ backgroundColor: 'white' }} />}
       {channels &&
         channels.map(e => (
