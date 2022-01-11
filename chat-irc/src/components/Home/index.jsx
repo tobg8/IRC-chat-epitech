@@ -1,13 +1,7 @@
 import React from 'react';
 import './style.css';
 import { UserContext } from '../../context/userContext';
-import {
-  TextField,
-  Button,
-  Paper,
-  ListItem,
-  ListItemText
-} from '@mui/material';
+import { TextField, Button, Paper } from '@mui/material';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -104,7 +98,5 @@ const Home = () => {
     </div>
   );
 };
-
-Home.propTypes = {};
 
 export default Home;
