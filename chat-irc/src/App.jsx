@@ -1,18 +1,23 @@
-/* eslint-disable import/extensions */
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Switch
+} from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-// import Button from '@mui/material/Button';
-
-import socket from './services/socket.js';
-import notify from './services/notifyEvent';
+import { UserContext } from './context/userContext';
 
 import {
   socketServerConnect
   // socketServerDisconnect
 } from './services/socketEvents';
 
+import Home from './components/Home';
+import ChatRoom from './components/ChatRoom';
+
 import 'react-toastify/dist/ReactToastify.min.css';
+import './styles/reset.css';
 import './index.css';
 
 function App() {
@@ -26,13 +31,14 @@ function App() {
     };
   });
 
+  const { user, setUser } = React.useContext(UserContext);
+
   return (
     <Router>
       <Routes>
-        {/* <Route exact path="/" element={<Home />} />
-        <Route exact path="/:roomId" component={<ChatRoom />} /> */}
+        <Route exact path="/" element={<Home />} />
+        <Route exact path="/chatroom" element={<ChatRoom />} />
       </Routes>
-      <p>DO something here</p>
       <ToastContainer
         position="bottom-right"
         autoClose={3000}
