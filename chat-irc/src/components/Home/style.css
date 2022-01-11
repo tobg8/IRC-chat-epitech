@@ -22,7 +22,7 @@
 
 .home__user-title {
   color: white;
-  padding: 2em 0;
+  padding: 1.5em 0;
   padding-left: 0;
 }
 
@@ -33,7 +33,7 @@
   display: flex;
   width: 30%;
   min-width: 500px;
-  justify-content: flex-start;
+  justify-content: space-around;
   flex-direction: column;
 }
 
@@ -57,4 +57,27 @@
   align-items: center;
   justify-content: center;
   margin: 0 auto;
+}
+
+.home__info-container {
+  min-height: 35px;
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 1em;
+}
+
+.home__info {
+  min-width: 150px;
+  color: white;
+  line-height: 1.1;
+}
+
+.home__info-definition {
+  text-align: start;
+  color: #b55b11;
+  font-weight: bold;
+}
+
+.home__decoration-smiley {
+  text-align: center;
 }

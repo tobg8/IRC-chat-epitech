@@ -78,21 +78,27 @@ const Home = () => {
               width: '100%',
               minHeight: '250px',
               padding: '.5em',
-              backgroundColor: '#b55b1182'
+              backgroundColor: '#b55b1136'
             }}
           >
-            {Object.keys(infos).map((key, index) => (
-              <ListItem disablePadding key={index}>
-                <ListItemText
-                  primary={`${key.charAt(0).toUpperCase()}${key.slice(1)}- ${
-                    infos[key]
-                  }`}
-                  sx={{ padding: '.3em', color: 'white' }}
-                />
-              </ListItem>
-            ))}
+            {infos.map(e => {
+              let result = e.content.split(/[:]/);
+              return (
+                <div key={e.title} className="home__info-container">
+                  <p className="home__info">{result[0]}</p>
+                  <p className="home__info home__info-definition">
+                    {result[1]}
+                  </p>
+                </div>
+              );
+            })}
           </Paper>
         </div>
+        {inputField.length <= 0 && (
+          <p className="home__decoration-smiley">
+            😉 😉 😉 😉 😉 😉 😉 😉 😉 😉 😉 😉 😉 😉 😉 😉 😉 😉 😉
+          </p>
+        )}
       </section>
     </div>
   );

@@ -1,11 +1,38 @@
-{
-  "nickname": "/nick nickname: define the nickname of the user on the server",
-  "list": "/list [string]: list the available channels from the server. If string is specified, only displays those whose name contains the string",
-  "create": "/create channel: create a channel with the specified name",
-  "delete": "/delete channel: delete the channel with the specified name.",
-  "join": "/join channel: join the specified channel.",
-  "quit": "/quit channel: quit the specified channel.",
-  "users": "/users: list the users currently in the channel",
-  "msg": "/msg nickname message: send a private the message to the specified nickname.",
-  "message": "message: send message the all the users on the channel"
-}
+[
+  {
+    "title": "/nick",
+    "content": "/nick nickname: define the nickname of the user on the server."
+  },
+  {
+    "title": "/list",
+    "content": "/list [string]: list the available channels from the server. If string is specified, only displays those whose name contains the string."
+  },
+  {
+    "title": "/create",
+    "content": "/create channel: create a channel with the specified name."
+  },
+  {
+    "title": "/delete",
+    "content": "/delete channel: delete the channel with the specified name."
+  },
+  {
+    "title": "/join",
+    "content": "/join channel: join the specified channel."
+  },
+  {
+    "title": "/quit",
+    "content": "/quit channel: quit the specified channel."
+  },
+  {
+    "title": "/users",
+    "content": "/users: list the users currently in the channel."
+  },
+  {
+    "title": "/msg",
+    "content": "/msg nickname message: send a private the message to the specified nickname."
+  },
+  {
+    "title": "message",
+    "content": "message: send message the all the users on the channel."
+  }
+]
