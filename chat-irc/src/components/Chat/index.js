@@ -10,6 +10,25 @@ import Messages from '../Messages';
 const Chat = ({ id, name, users, participants }) => {
   const { message, setMessage } = React.useContext(UserContext);
 
+  const handleChatSubmit = e => {
+    if (e.keyCode === 13) {
+      // submitMessage
+      console.log('message envoyé');
+      setMessage('');
+    }
+
+    if (e.target.id === 'submit' || e.target.parentElement.id === 'submit') {
+      // submit Message
+      console.log('message envoyé');
+      setMessage('');
+    }
+  };
+
+  const changeInputField = e => {
+    // if value not equal to enter key
+    if (e.target.value !== '\n') setMessage(e.target.value, 'here');
+  };
+
   return (
     <div className="chat">
       <h2 className="chat__title">{name}</h2>
@@ -29,6 +48,7 @@ const Chat = ({ id, name, users, participants }) => {
           backgroundColor: 'transparent',
           display: 'flex'
         }}
+        onSubmit={handleChatSubmit}
       >
         <TextField
           id="filled-basic"
@@ -39,7 +59,8 @@ const Chat = ({ id, name, users, participants }) => {
           fullWidth
           variant="outlined"
           value={message}
-          onChange={e => setMessage(e.target.value)}
+          onChange={changeInputField}
+          onKeyDown={handleChatSubmit}
           sx={{
             textarea: { color: 'white' },
             '& .MuiOutlinedInput-notchedOutline': {
@@ -51,14 +72,16 @@ const Chat = ({ id, name, users, participants }) => {
           }}
         ></TextField>
         <IconButton
+          id="submit"
           sx={{
             '& .MuiButtonBase-root': {
               borderColor: 'white'
             }
           }}
           aria-label="menu"
+          onClick={handleChatSubmit}
         >
-          <SendIcon color="warning" fontSize="large" />
+          <SendIcon id="submit" color="warning" fontSize="large" />
         </IconButton>
       </Paper>
     </div>
