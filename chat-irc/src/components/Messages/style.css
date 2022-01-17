@@ -7,6 +7,22 @@
 .messages__container {
   width: 95%;
   padding: 1em;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.messages__message-owner {
+  display: flex;
+  justify-content: start;
+  color: white;
+  text-align: center;
+}
+
+.messages__message-normal {
+  display: flex;
+  justify-content: end;
+  text-align: center;
 }
 
 .messages__users-container {
@@ -19,6 +35,18 @@
   padding-left: 1em;
   border-left: 2px dashed white;
   border-bottom: 2px dashed white;
+}
+
+.messages__message--user {
+  text-align: start;
+  color: white;
+  margin-bottom: 1em;
+}
+
+.messages__message--message {
+  text-align: start;
+  margin-top: 0.5em;
+  color: white;
 }
 
 .messages__user {

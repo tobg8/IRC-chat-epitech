@@ -53,7 +53,7 @@ const ChatRoom = () => {
       });
       if (!isAlreadyInRoom[0]) {
         socket.emit('channel-join', index, user, ack => {});
-        notify('🟢 | Entered channel - ' + channels[index - 1].name);
+        notify('🟢 | You entered channel - ' + channels[index - 1].name);
       }
     } catch (error) {
       console.log(error);

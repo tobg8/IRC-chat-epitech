@@ -8,6 +8,7 @@ import {
 } from '@mui/material';
 import { UserContext } from '../../context/userContext';
 import PropTypes from 'prop-types';
+import socket from '../../services/socket';
 
 const ChannelList = ({ handleListItemClick }) => {
   const { channels, isLoading, selectedChannel } =

@@ -6,20 +6,32 @@ import { Divider, TextField, Paper, IconButton } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 
 import Messages from '../Messages';
+import socket from '../../services/socket';
 
 const Chat = ({ id, name, users, participants }) => {
-  const { message, setMessage } = React.useContext(UserContext);
+  const { message, setMessage, user, channels } = React.useContext(UserContext);
+  const [chatMessages, setChatMessages] = React.useState(null);
+
+  React.useEffect(() => {
+    socket.on('message', channel => {
+      setChatMessages(channel.messages);
+    });
+  }, [channels]);
+
+  const sendMessage = () => {
+    socket.emit('send-message', message, user, id, ack => {});
+  };
 
   const handleChatSubmit = e => {
     if (e.keyCode === 13) {
       // submitMessage
-      console.log('message envoyé');
+      sendMessage();
       setMessage('');
     }
 
     if (e.target.id === 'submit' || e.target.parentElement.id === 'submit') {
       // submit Message
-      console.log('message envoyé');
+      sendMessage();
       setMessage('');
     }
   };
@@ -40,6 +52,7 @@ const Chat = ({ id, name, users, participants }) => {
         channelId={id}
         channelName={name}
         participants={participants}
+        messages={chatMessages}
       ></Messages>
 
       <Paper
