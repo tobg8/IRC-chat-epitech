@@ -11,16 +11,32 @@ import Messages from '../Messages';
 import socket from '../../services/socket';
 
 const Chat = ({ id, name, users, participants }) => {
-  const { message, setMessage, user, channels } = React.useContext(UserContext);
+  const { message, setMessage, user, channels, setUser } =
+    React.useContext(UserContext);
   const [chatMessages, setChatMessages] = React.useState(null);
-  console.log(chatMessages);
+
   React.useEffect(() => {
     socket.on('message', channel => {
       setChatMessages(channel.messages);
     });
-  }, [channels]);
+    socket.on('user-renamed', response => {
+      if (user === response.old_name) {
+        setUser(response.new_name);
+        users.map(e => {
+          if (e === response.old_name) {
+            e = response.new_name;
+          }
+        });
+      }
+    });
+  }, [channels, user]);
 
   const sendMessage = () => {
+    const nickNameSplit = message.split(' ');
+    if (nickNameSplit[0] === '/nick') {
+      socket.emit('rename-user', nickNameSplit[1], user, ack => {});
+      return;
+    }
     switch (message) {
       case '/users':
         socket.emit('list-users', id, user, ack => {});

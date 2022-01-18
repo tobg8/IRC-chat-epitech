@@ -26,7 +26,6 @@ const Messages = ({ users, channelId, channelName, messages }) => {
     socket.on('listed-users', response => {
       if (response.username === user) {
         setInfosMessages(response.users);
-        notify(`💥 ${response.users.map(e => e)} | ${name}`);
       }
     });
   }, []);
@@ -108,16 +107,7 @@ const Messages = ({ users, channelId, channelName, messages }) => {
       <div className="messages__users-container">
         {users.length > 0 &&
           users.map(e => {
-            if (e === user) {
-              return (
-                <div key={e}>
-                  <p className="messages__user messages__user-me">
-                    {`${e} (you)`}
-                  </p>
-                  <Divider sx={{ backgroundColor: 'white' }} />
-                </div>
-              );
-            } else {
+            if (e !== user) {
               return (
                 <div key={e}>
                   <p className="messages__user">{e}</p>
@@ -126,6 +116,10 @@ const Messages = ({ users, channelId, channelName, messages }) => {
               );
             }
           })}
+        <div>
+          <p className="messages__user messages__user-me">{`${user} (you)`}</p>
+          <Divider sx={{ backgroundColor: 'white' }} />
+        </div>
       </div>
     </div>
   );

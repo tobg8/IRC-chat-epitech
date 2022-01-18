@@ -42,7 +42,7 @@ const ChatRoom = () => {
           handleChangeChannels(updateChannels);
         });
       });
-  }, [selectedChannel, channels]);
+  }, [selectedChannel, channels, user]);
 
   const handleListItemClick = (_, index) => {
     try {

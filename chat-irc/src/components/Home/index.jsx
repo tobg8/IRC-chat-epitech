@@ -6,16 +6,16 @@ import { TextField, Button, Paper } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 import infos from '../../assets/infos.json';
+import socket from '../../services/socket';
 
 const Home = () => {
   const navigate = useNavigate();
+  const { user, setUser } = React.useContext(UserContext);
   React.useEffect(() => {
     if (user) {
       navigate('/chatroom');
     }
   });
-
-  const { user, setUser } = React.useContext(UserContext);
 
   const [inputField, setInputField] = React.useState('');
 
