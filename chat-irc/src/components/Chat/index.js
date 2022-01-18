@@ -5,13 +5,15 @@ import { UserContext } from '../../context/userContext';
 import { Divider, TextField, Paper, IconButton } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 
+import notify from '../../services/notifyEvent';
+
 import Messages from '../Messages';
 import socket from '../../services/socket';
 
 const Chat = ({ id, name, users, participants }) => {
   const { message, setMessage, user, channels } = React.useContext(UserContext);
   const [chatMessages, setChatMessages] = React.useState(null);
-
+  console.log(chatMessages);
   React.useEffect(() => {
     socket.on('message', channel => {
       setChatMessages(channel.messages);
@@ -19,7 +21,13 @@ const Chat = ({ id, name, users, participants }) => {
   }, [channels]);
 
   const sendMessage = () => {
-    socket.emit('send-message', message, user, id, ack => {});
+    switch (message) {
+      case '/users':
+        socket.emit('list-users', id, user, ack => {});
+        break;
+      default:
+        socket.emit('send-message', message, user, id, ack => {});
+    }
   };
 
   const handleChatSubmit = e => {

@@ -8,6 +8,7 @@ import notify from '../../services/notifyEvent';
 
 const Messages = ({ users, channelId, channelName, messages }) => {
   const { user } = React.useContext(UserContext);
+  const [infosMessage, setInfosMessages] = React.useState([]);
 
   React.useEffect(() => {
     socket.on('channel', socket => {
@@ -20,6 +21,12 @@ const Messages = ({ users, channelId, channelName, messages }) => {
           // j'ai une notification
           notify(`🆕 ${userEvent} | joined ${socket.name}`);
         }
+      }
+    });
+    socket.on('listed-users', response => {
+      if (response.username === user) {
+        setInfosMessages(response.users);
+        notify(`💥 ${response.users.map(e => e)} | ${name}`);
       }
     });
   }, []);
@@ -77,6 +84,26 @@ const Messages = ({ users, channelId, channelName, messages }) => {
               );
             }
           })}
+        {infosMessage.length > 0 &&
+          infosMessage.map(e => (
+            <Paper
+              key={e}
+              elevation={16}
+              sx={{
+                backgroundColor: '#b55b11',
+                width: '30%',
+                padding: '.5em',
+                display: 'flex',
+                justifyContent: 'center',
+                flexDirection: 'column',
+                marginBottom: '.5em'
+              }}
+            >
+              {/* <p className="messages__message--user">{message.user} -</p>
+              <Divider sx={{ backgroundColor: 'white' }} /> */}
+              <p className="messages__message--message">{e}</p>
+            </Paper>
+          ))}
       </section>
       <div className="messages__users-container">
         {users.length > 0 &&
