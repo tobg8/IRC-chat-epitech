@@ -35,7 +35,7 @@ const Messages = ({ users, channelId, channelName, messages }) => {
       <section className="messages__container">
         {messages &&
           messages.map(message => {
-            if (message.user === user && message.chat_id === channelId) {
+            if (message.user === user && message.room_name === channelName) {
               return (
                 <div key={message.message} className="messages__message-owner">
                   <Paper
@@ -53,12 +53,12 @@ const Messages = ({ users, channelId, channelName, messages }) => {
                     <p className="messages__message--user">{message.user} -</p>
                     <Divider sx={{ backgroundColor: 'white' }} />
                     <p className="messages__message--message">
-                      {message.message}
+                      {message.content}
                     </p>
                   </Paper>
                 </div>
               );
-            } else if (message.chat_id === channelId) {
+            } else if (message.room_name === channelName) {
               return (
                 <div key={message.message} className="messages__message-normal">
                   <Paper
@@ -76,7 +76,7 @@ const Messages = ({ users, channelId, channelName, messages }) => {
                     <p className="messages__message--user">{message.user} -</p>
                     <Divider sx={{ backgroundColor: 'white' }} />
                     <p className="messages__message--message">
-                      {message.message}
+                      {message.content}
                     </p>
                   </Paper>
                 </div>
@@ -98,8 +98,6 @@ const Messages = ({ users, channelId, channelName, messages }) => {
                 marginBottom: '.5em'
               }}
             >
-              {/* <p className="messages__message--user">{message.user} -</p>
-              <Divider sx={{ backgroundColor: 'white' }} /> */}
               <p className="messages__message--message">{e}</p>
             </Paper>
           ))}

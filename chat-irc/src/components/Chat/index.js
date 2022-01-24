@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { UserContext } from '../../context/userContext';
 import { Divider, TextField, Paper, IconButton } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
+import { supabase } from '../../supabaseClient';
 
 import notify from '../../services/notifyEvent';
 
@@ -13,12 +14,11 @@ import socket from '../../services/socket';
 const Chat = ({ id, name, users, participants }) => {
   const { message, setMessage, user, channels, setUser } =
     React.useContext(UserContext);
-  const [chatMessages, setChatMessages] = React.useState(null);
+  const [chatMessages, setChatMessages] = React.useState([]);
 
   React.useEffect(() => {
-    socket.on('message', channel => {
-      setChatMessages(channel.messages);
-    });
+    fetchMessages();
+
     socket.on('user-renamed', response => {
       if (user === response.old_name) {
         setUser(response.new_name);
@@ -31,7 +31,28 @@ const Chat = ({ id, name, users, participants }) => {
     });
   }, [channels, user]);
 
-  const sendMessage = () => {
+  socket.on('message', channel => {
+    if (chatMessages.length <= 0) {
+      setChatMessages(channel.messages);
+    } else {
+      const oldMessages = [...chatMessages];
+
+      const newMessage = channel.messages.slice(-1);
+      oldMessages.push(newMessage[0]);
+
+      setChatMessages(oldMessages);
+    }
+  });
+
+  const fetchMessages = async () => {
+    let { data: messages, error } = await supabase
+      .from('messages')
+      .select('*')
+      .eq('room_name', name);
+    setChatMessages(messages);
+  };
+
+  const sendMessage = async () => {
     const nickNameSplit = message.split(' ');
     if (nickNameSplit[0] === '/nick') {
       socket.emit('rename-user', nickNameSplit[1], user, ack => {});
@@ -42,7 +63,14 @@ const Chat = ({ id, name, users, participants }) => {
         socket.emit('list-users', id, user, ack => {});
         break;
       default:
-        socket.emit('send-message', message, user, id, ack => {});
+        try {
+          const { data, error } = await supabase
+            .from('messages')
+            .insert([{ content: message, user: user, room_name: name }]);
+          socket.emit('send-message', message, user, id, name, ack => {});
+        } catch (error) {
+          console.log(error);
+        }
     }
   };
 
