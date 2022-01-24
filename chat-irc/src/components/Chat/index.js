@@ -53,9 +53,17 @@ const Chat = ({ id, name, users, participants }) => {
   };
 
   const sendMessage = async () => {
-    const nickNameSplit = message.split(' ');
-    if (nickNameSplit[0] === '/nick') {
-      socket.emit('rename-user', nickNameSplit[1], user, ack => {});
+    const splitMessage = message.split(' ');
+    if (splitMessage[0] === '/nick') {
+      socket.emit('rename-user', splitMessage[1], user, ack => {});
+      return;
+    }
+    if (splitMessage[0] === '/create') {
+      const channelName = splitMessage[1];
+      const { data, error } = await supabase
+        .from('rooms')
+        .insert([{ name: channelName }]);
+      socket.emit('create-channel', channelName, ack => {});
       return;
     }
     switch (message) {

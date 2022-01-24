@@ -28,7 +28,10 @@ const Messages = ({ users, channelId, channelName, messages }) => {
         setInfosMessages(response.users);
       }
     });
-  }, []);
+    chatRef.current.scrollIntoView();
+  }, [messages]);
+
+  const chatRef = React.useRef(null);
 
   return (
     <div className="messages">
@@ -101,6 +104,7 @@ const Messages = ({ users, channelId, channelName, messages }) => {
               <p className="messages__message--message">{e}</p>
             </Paper>
           ))}
+        <div ref={chatRef}></div>
       </section>
       <div className="messages__users-container">
         {users.length > 0 &&

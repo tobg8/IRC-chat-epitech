@@ -27,33 +27,48 @@ const ChatRoom = () => {
     if (!user) {
       return navigate('/');
     }
-    if (channels === null) {
+    if (channels === null || channels.length <= 0) {
       getChannels();
     }
-
+    socket.on('new-channels', channels => {
+      setChannels(channels);
+    });
     channels &&
       socket.on('channel', channel => {
+        console.log(channel);
         let updateChannels = [...channels];
-        updateChannels.map(e => {
-          if (e.id === channel.id) {
-            e.participants = channel.participants;
-            e.users = channel.users;
-          }
+        const isPresent = updateChannels.filter(e => e.id === channel.id);
+        console.log(isPresent);
+        if (isPresent[0]) {
+          updateChannels.map(e => {
+            if (e.id === channel.id) {
+              e.participants = channel.participants;
+              e.users = channel.users;
+            }
+            handleChangeChannels(updateChannels);
+          });
+        } else {
+          console.log('push channel');
+          console.log(channels);
+          updateChannels.push(channel);
           handleChangeChannels(updateChannels);
-        });
+        }
       });
-  }, [selectedChannel, channels, user]);
+  }, [channels]);
 
   const handleListItemClick = (_, index) => {
     try {
       setSelectedChannel(index);
+
+      const filteredChannel = channels.filter(e => e.id === index);
       // We check if user is already in this channel before emiting entry
-      const isAlreadyInRoom = channels[index - 1].users.filter(e => {
+      const isAlreadyInRoom = filteredChannel[0].users.filter(e => {
         return e === user;
       });
+
       if (!isAlreadyInRoom[0]) {
         socket.emit('channel-join', index, user, ack => {});
-        notify('🟢 | You entered channel - ' + channels[index - 1].name);
+        notify('🟢 | You entered channel - ' + filteredChannel[0].name);
       }
     } catch (error) {
       console.log(error);
@@ -79,7 +94,7 @@ const ChatRoom = () => {
           </section>
         )}
         {selectedChannel !== null && (
-          <Chat {...channels[selectedChannel - 1]} />
+          <Chat {...channels.filter(e => e.id === selectedChannel)[0]} />
         )}
       </section>
     </div>

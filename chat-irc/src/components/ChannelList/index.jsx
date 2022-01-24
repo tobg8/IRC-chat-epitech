@@ -15,7 +15,11 @@ const ChannelList = ({ handleListItemClick }) => {
     React.useContext(UserContext);
 
   return (
-    <List component="nav" aria-label="channel list">
+    <List
+      component="nav"
+      aria-label="channel list"
+      style={{ maxHeight: '100%', overflowX: 'hidden', overflowX: 'auto' }}
+    >
       {isLoading && <p>Loading</p>}
       {!isLoading && <Divider sx={{ backgroundColor: 'white' }} />}
       {channels &&
