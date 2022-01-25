@@ -79,6 +79,28 @@ const Chat = ({ id, name, users, participants }) => {
       }
       return;
     }
+    if (splitMessage[0] === '/quit') {
+      const channelName = splitMessage[1];
+      socket.emit('disconnect', ack => {});
+    }
+    if (splitMessage[0] === '/list') {
+      const channelName = splitMessage[1];
+      if (!channelName) {
+        const channelNames = [];
+        channels.map(e => channelNames.push(e.name));
+        notify('🟢 | Available channels ' + `${channelNames.join(' ')}`);
+      } else {
+        const channelNames = [];
+        channels.map(e => channelNames.push(e.name));
+        const result = [];
+        channelNames.map(chan => {
+          if (chan.toLowerCase().includes(channelName)) {
+            result.push(chan);
+          }
+        });
+        notify('🟢 | Available channels ' + `${result.join(' ')}`);
+      }
+    }
     if (splitMessage[0] === '/join') {
       const channelName = splitMessage[1];
       const channelToJoin = channels.filter(e => e.name === channelName);
