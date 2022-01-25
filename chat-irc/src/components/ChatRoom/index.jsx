@@ -51,8 +51,6 @@ const ChatRoom = () => {
           handleChangeChannels(updateChannels);
         });
       } else {
-        console.log('push channel');
-        console.log(channels);
         updateChannels.push(channel);
         handleChangeChannels(updateChannels);
       }

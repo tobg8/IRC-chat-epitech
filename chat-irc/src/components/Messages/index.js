@@ -31,7 +31,23 @@ const Messages = ({ users, channelId, channelName, messages }) => {
       const userAlreadyInChat = socket.users.filter(e => e === user)[0];
       if (userAlreadyInChat !== undefined || null) {
         // j'ai une notification
-        return notify(`🆕 ${userEvent} | joined ${socket.name}`);
+        const alreadyHere = count.filter(e => e.user === userEvent);
+        if (alreadyHere[0]) {
+          if (e.roomName !== socket.name) {
+            count.push({
+              user: userEvent,
+              roomName: socket.name
+            });
+            return notify(`🆕 ${userEvent} | joined ${socket.name}`);
+          }
+        } else {
+          console.log('wowowowo');
+          count.push({
+            user: userEvent,
+            roomName: socket.name
+          });
+          return notify(`🆕 ${userEvent} | joined ${socket.name}`);
+        }
       }
     }
   });
