@@ -31,9 +31,10 @@ const Messages = ({ users, channelId, channelName, messages }) => {
       const userAlreadyInChat = socket.users.filter(e => e === user)[0];
       if (userAlreadyInChat !== undefined || null) {
         // j'ai une notification
-        const alreadyHere = count.filter(e => e.user === userEvent);
+        const alreadyHere = count.filter(e => e.roomName === socket.name);
         if (alreadyHere[0]) {
-          if (e.roomName !== socket.name) {
+          if (alreadyHere[0].user !== userEvent) {
+            console.log(socket, alreadyHere[0]);
             count.push({
               user: userEvent,
               roomName: socket.name
