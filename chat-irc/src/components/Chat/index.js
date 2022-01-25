@@ -66,6 +66,17 @@ const Chat = ({ id, name, users, participants }) => {
       socket.emit('create-channel', channelName, ack => {});
       return;
     }
+    if (splitMessage[0] === '/delete') {
+      const channelName = splitMessage[1];
+      const { data, error } = await supabase
+        .from('rooms')
+        .delete()
+        .eq('name', channelName);
+      console.log(data);
+      if (data[0]) {
+        socket.emit('delete-channel', channelName, ack => {});
+      }
+    }
     switch (message) {
       case '/users':
         socket.emit('list-users', id, user, ack => {});

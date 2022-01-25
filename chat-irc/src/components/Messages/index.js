@@ -9,20 +9,9 @@ import notify from '../../services/notifyEvent';
 const Messages = ({ users, channelId, channelName, messages }) => {
   const { user } = React.useContext(UserContext);
   const [infosMessage, setInfosMessages] = React.useState([]);
+  const [count, setCount] = React.useState([]);
 
   React.useEffect(() => {
-    socket.on('channel', socket => {
-      const userEvent = socket.users[socket.users.length - 1];
-      // si l'event envoyé n'est pas envoyé par moi même
-      if (userEvent !== user) {
-        // si je suis déja dans le chat concerné par l'event
-        const userAlreadyInChat = socket.users.filter(e => e === user)[0];
-        if (userAlreadyInChat !== undefined || null) {
-          // j'ai une notification
-          notify(`🆕 ${userEvent} | joined ${socket.name}`);
-        }
-      }
-    });
     socket.on('listed-users', response => {
       if (response.username === user) {
         setInfosMessages(response.users);
@@ -32,6 +21,20 @@ const Messages = ({ users, channelId, channelName, messages }) => {
   }, [messages]);
 
   const chatRef = React.useRef(null);
+
+  socket.on('channel', socket => {
+    const userEvent = socket.users[socket.users.length - 1];
+    // si l'event envoyé n'est pas envoyé par moi même
+
+    if (userEvent !== user) {
+      // si je suis déja dans le chat concerné par l'event
+      const userAlreadyInChat = socket.users.filter(e => e === user)[0];
+      if (userAlreadyInChat !== undefined || null) {
+        // j'ai une notification
+        return notify(`🆕 ${userEvent} | joined ${socket.name}`);
+      }
+    }
+  });
 
   return (
     <div className="messages">
