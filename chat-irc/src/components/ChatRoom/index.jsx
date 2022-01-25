@@ -30,31 +30,31 @@ const ChatRoom = () => {
     if (channels === null || channels.length <= 0) {
       getChannels();
     }
+    socket.on('new-channels', channels => {
+      setSelectedChannel(null);
+      setChannels(channels);
+    });
   }, [channels]);
 
-  socket.on('new-channels', channels => {
-    setSelectedChannel(null);
-    setChannels(channels);
-  });
-  channels &&
-    socket.on('channel', channel => {
-      console.log(channel);
-      let updateChannels = [...channels];
-      const isPresent = updateChannels.filter(e => e.id === channel.id);
+  // channels &&
+  //   socket.on('channel', channel => {
+  //     console.log(channel);
+  //     let updateChannels = [...channels];
+  //     const isPresent = updateChannels.filter(e => e.id === channel.id);
 
-      if (isPresent[0]) {
-        updateChannels.map(e => {
-          if (e.id === channel.id) {
-            e.participants = channel.participants;
-            e.users = channel.users;
-          }
-        });
-        handleChangeChannels(updateChannels);
-      } else {
-        updateChannels.push(channel);
-        handleChangeChannels(updateChannels);
-      }
-    });
+  //     if (isPresent[0]) {
+  //       updateChannels.map(e => {
+  //         if (e.id === channel.id) {
+  //           e.participants = channel.participants;
+  //           e.users = channel.users;
+  //         }
+  //       });
+  //       handleChangeChannels(updateChannels);
+  //     } else {
+  //       updateChannels.push(channel);
+  //       handleChangeChannels(updateChannels);
+  //     }
+  //   });
 
   const handleListItemClick = (_, index) => {
     try {

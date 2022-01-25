@@ -82,6 +82,7 @@ const Chat = ({ id, name, users, participants }) => {
     if (splitMessage[0] === '/quit') {
       const channelName = splitMessage[1];
       socket.emit('disconnect', ack => {});
+      return;
     }
     if (splitMessage[0] === '/list') {
       const channelName = splitMessage[1];
@@ -89,6 +90,7 @@ const Chat = ({ id, name, users, participants }) => {
         const channelNames = [];
         channels.map(e => channelNames.push(e.name));
         notify('🟢 | Available channels ' + `${channelNames.join(' ')}`);
+        return;
       } else {
         const channelNames = [];
         channels.map(e => channelNames.push(e.name));
@@ -99,6 +101,7 @@ const Chat = ({ id, name, users, participants }) => {
           }
         });
         notify('🟢 | Available channels ' + `${result.join(' ')}`);
+        return;
       }
     }
     if (splitMessage[0] === '/join') {
@@ -118,6 +121,7 @@ const Chat = ({ id, name, users, participants }) => {
             .from('messages')
             .insert([{ content: message, user: user, room_name: name }]);
           socket.emit('send-message', message, user, id, name, ack => {});
+          return;
         } catch (error) {
           console.log(error);
         }
