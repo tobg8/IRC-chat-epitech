@@ -38,6 +38,7 @@ const ChatRoom = () => {
   });
   channels &&
     socket.on('channel', channel => {
+      console.log(channel);
       let updateChannels = [...channels];
       const isPresent = updateChannels.filter(e => e.id === channel.id);
 

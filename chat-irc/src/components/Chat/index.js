@@ -12,7 +12,7 @@ import Messages from '../Messages';
 import socket from '../../services/socket';
 
 const Chat = ({ id, name, users, participants }) => {
-  const { message, setMessage, user, channels, setUser } =
+  const { message, setMessage, user, channels, setUser, setSelectedChannel } =
     React.useContext(UserContext);
   const [chatMessages, setChatMessages] = React.useState([]);
 
@@ -75,7 +75,16 @@ const Chat = ({ id, name, users, participants }) => {
       console.log(data);
       if (data[0]) {
         socket.emit('delete-channel', channelName, ack => {});
+        return;
       }
+      return;
+    }
+    if (splitMessage[0] === '/join') {
+      const channelName = splitMessage[1];
+      const channelToJoin = channels.filter(e => e.name === channelName);
+      socket.emit('channel-join', channelToJoin[0].id, user, ack => {});
+      setSelectedChannel(channelToJoin[0].id);
+      return;
     }
     switch (message) {
       case '/users':
