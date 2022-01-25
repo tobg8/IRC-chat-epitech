@@ -48,8 +48,8 @@ const ChatRoom = () => {
             e.participants = channel.participants;
             e.users = channel.users;
           }
-          handleChangeChannels(updateChannels);
         });
+        handleChangeChannels(updateChannels);
       } else {
         updateChannels.push(channel);
         handleChangeChannels(updateChannels);
